@@ -4,4 +4,4 @@
     - name: Include vars of site-config 
       include_vars:
         file: config-schema.yaml
-	name: site-config
+	name: site-level-configuration-file.yml
