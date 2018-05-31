@@ -1,0 +1,26 @@
+---
+ - hosts: owncomp
+   tasks:
+    - include_vars:
+        file: site-level-configuration-file.yaml
+        name: config           
+
+    - add_host:
+        name: "{{ item['ip-address'] }}"
+        groups: webservers
+        ansible_user: root
+      with_items: "{{ config['site-infrastructure'] }}"
+
+ - hosts: webservers
+   tasks:
+    - include_vars:
+        file: site-level-configuration-file.yaml
+        name: config
+
+    - yum:
+        name: git
+
+    - git:
+        repo: "{{ item['repository-url'] }}"
+        dest: /home/repo
+      with_items: "{{ config['lightweight-components'] }}"

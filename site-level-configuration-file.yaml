@@ -1,0 +1,25 @@
+---
+site-infrastructure: [
+  {
+    hostname: ec2-18-184-37-92.eu-central-1,
+    domain: compute.amazonaws.com,
+    ip-address: 104.236.95.32
+  }
+]
+lightweight-components: [
+  {
+    type: compute-element,
+    repository-url: 'https://github.com/WLCG-Lightweight-Sites/wlcg_lightweight_site_ce_cream.git'
+    }]
+
+
+
+
+    #users:[{
+#
+#    }]
+
+
+#[{
+#
+#}},'atlas']

@@ -1,2 +1,7 @@
 [webservers]
-104.236.95.32
+
+
+[owncomp]
+localhost              ansible_connection=local
+
+
