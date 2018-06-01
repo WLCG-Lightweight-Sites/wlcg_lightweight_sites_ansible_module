@@ -2,25 +2,33 @@
  - hosts: owncomp
    tasks:
     - include_vars:
-        file: site-level-configuration-file.yaml
+        file: complete_config.yaml
         name: config           
 
     - add_host:
         name: "{{ item['ip-address'] }}"
         groups: webservers
         ansible_user: root
-      with_items: "{{ config['site-infrastructure'] }}"
+      with_items: "{{ config['site_infrastructure'] }}"
 
  - hosts: webservers
    tasks:
     - include_vars:
-        file: site-level-configuration-file.yaml
+        file: complete_config.yaml
         name: config
 
     - yum:
         name: git
+        name: docker
 
     - git:
         repo: "{{ item['repository-url'] }}"
         dest: /home/repo
       with_items: "{{ config['lightweight-components'] }}"
+
+    - docker_container:
+        name: wlcg_container
+        image: /home/repo/yaim/Dockerfile
+      loop_control:
+        loop_var: "{{ config['lightweight-components']['nodes'][1]['container_count'] }}"
+
