@@ -39,9 +39,8 @@
         name: docker
         state: started
 
-    # - docker_image:
-    #     name: wlcg
-    #     tag: lwce
-    #     path: /home/repo/yaim
+    - docker_image:
+        name: maany/lightweight-site-ce
+        state: present
 
 
