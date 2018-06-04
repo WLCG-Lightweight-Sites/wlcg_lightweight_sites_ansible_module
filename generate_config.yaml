@@ -4,5 +4,5 @@
     - shell: echo "---" | cat - site-level-configuration-default-values.yaml > complete_config.yaml
 
     - shell: echo '\n' >> complete_config.yaml
-
-    - shell: cat complete_config.yaml site-level-configuration-file2.yaml > complete_config.yaml
+   
+    - shell: cat site-level-configuration-file2.yaml >> complete_config.yaml

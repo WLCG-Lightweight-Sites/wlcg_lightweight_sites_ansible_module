@@ -6,7 +6,7 @@
         name: config           
 
     - add_host:
-        name: "{{ item['ip-address'] }}"
+        name: "{{ item['ip_address'] }}"
         groups: webservers
         ansible_user: root
       with_items: "{{ config['site_infrastructure'] }}"
@@ -19,16 +19,29 @@
 
     - yum:
         name: git
-        name: docker
+        name: python-setuptools
+
+    - easy_install:
+        name: pip
+
+    - pip:
+        name: docker-py
 
     - git:
-        repo: "{{ item['repository-url'] }}"
+        repo: "{{ item['repository_url'] }}"
         dest: /home/repo
-      with_items: "{{ config['lightweight-components'] }}"
+      with_items: "{{ config['lightweight_components'] }}"
 
-    - docker_container:
-        name: wlcg_container
-        image: /home/repo/yaim/Dockerfile
-      loop_control:
-        loop_var: "{{ config['lightweight-components']['nodes'][1]['container_count'] }}"
+    - yum:
+        name: docker
+
+    - service:
+        name: docker
+        state: started
+
+    # - docker_image:
+    #     name: wlcg
+    #     tag: lwce
+    #     path: /home/repo/yaim
+
 
