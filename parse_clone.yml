@@ -43,4 +43,13 @@
         name: maany/lightweight-site-ce
         state: present
 
-
+    - docker_container:
+        name: lwce
+        image: maany/lightweight-site-ce
+        privileged: yes
+        network_mode: host
+        #entrypoint: ls ce-config/ce-config
+        state: started
+        volumes:
+         # - /home/repo/yaim:/root
+          - /home/repo/yaim/ce-config:/ce-config
