@@ -43,12 +43,31 @@
         name: maany/lightweight-site-ce
         state: present
 
+    - file:
+        path: /home/repo/yaim/ce-config/CE
+        state: directory
+        mode: 0600
+
+    - file:
+        path: /home/repo/yaim/ce-config
+        state: directory
+        mode: 0600
+
+    - file:
+        path: /home/repo/yaim/ce-config/host-certificates/hostcert.pem
+        state: touch
+
+    - file:
+        path: /home/repo/yaim/ce-config/host-certificates/hostkey.pem
+        state: touch
+        mode: 0600
+
     - docker_container:
         name: lwce
         image: maany/lightweight-site-ce
         privileged: yes
         network_mode: host
-        #entrypoint: ls ce-config/ce-config
+        entrypoint: sleep 500
         state: started
         volumes:
          # - /home/repo/yaim:/root
