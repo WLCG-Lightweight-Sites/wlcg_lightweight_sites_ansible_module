@@ -1,0 +1,18 @@
+---
+ - hosts: owncomp
+   tasks:
+    # include variables from compiled complete_config
+    - include_vars:
+        file: complete_config.yaml # generated from the compiler
+        name: config
+
+    # create a temporary directory for config-schemas
+    - file:
+        path: /home/tarang/wlcg_lightweight_sites_ansible_module/tmp
+        state: directory
+    
+    # clone config-schemas in tmp directory
+    - include_tasks: augment_git.yml
+      vars:
+        repo_url: "{{ item['repository_url'] }}"
+      with_items: "{{ config['lightweight_components'] }}"

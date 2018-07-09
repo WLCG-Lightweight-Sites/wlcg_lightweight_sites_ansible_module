@@ -1,0 +1,1 @@
+- shell: git clone {{ repo_url }} tmp
