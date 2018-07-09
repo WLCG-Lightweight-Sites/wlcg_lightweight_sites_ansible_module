@@ -16,3 +16,6 @@
       vars:
         repo_url: "{{ item['repository_url'] }}"
       with_items: "{{ config['lightweight_components'] }}"
+
+    # call script to replace values according to config-schema
+    - shell: python augment_config-schema.py complete_config.yaml config-schema.yaml
