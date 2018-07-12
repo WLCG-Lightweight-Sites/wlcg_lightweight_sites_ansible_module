@@ -1,1 +1,15 @@
-- shell: git clone {{ repo_url }} tmp
+- name: download default-data to tmp directory given {{ component }}
+  shell: "cd tmp && git clone {{ component['repository_url'] }} && echo $(basename {{ component['repository_url'] }})"
+  register: output
+
+- name: include default-data from repo
+  include_vars:
+    file: "./tmp/{{ output.stdout }}/default-data.yaml"
+    name: default_data
+
+- name: update values that are not defined
+  shell: "python augment_config-schema.py {{ index }} {{ loop_item.key }} {{ loop_item.value }}"
+  with_dict: "{{ default_data['available-from-site-level-config'] }}"
+  loop_control:
+    loop_var: loop_item
+  when: component.config[0]['cream-info'][loop_item.key] is undefined

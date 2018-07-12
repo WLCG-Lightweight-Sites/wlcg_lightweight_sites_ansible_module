@@ -142,7 +142,7 @@ site_infrastructure:
 
 lightweight_components:
   - type: compute_element
-    repository_url: "https://github.com/WLCG-Lightweight-Sites/wlcg_lightweight_site_ce_cream"
+    repository_url: "https://github.com/tarang98/wlcg_lightweight_site_ce_cream"
     nodes:
       - node: lw-site-droplet-0
         container_count: 1

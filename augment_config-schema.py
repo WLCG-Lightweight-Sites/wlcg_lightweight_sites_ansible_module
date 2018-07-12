@@ -1,20 +1,13 @@
-import argparse, yaml
-
-def augment(site_level_configuration_file, config_schema):
-    input_config_file = yaml.load(site_level_configuration_file)
-    schema = yaml.load(config_schema)
-
-    for (each in schema['available-from-site-level-config']):
-        input_config_file[each] = schema[each]
-
-    f = open('complete_config.yaml', 'w'):
-    f.write(yaml.dump(input_config_file)) 
+import sys, yaml
 
 if __name__ == "__main__":
+    augcc = open('augmented_complete_config.yaml', 'r+')
+    yaugcc = yaml.load(augcc.read())
 
-    parser = argparse.ArgumentParser()
+    new = {str(sys.argv[2]): str(sys.argv[3])}
+    yaugcc['lightweight_components'][int(sys.argv[1])]['config'][0]['cream-info'].update(new)
+    augcc.close()
 
-    parser.add_argument('filename', type=argparse.FileType('r'))
-    parser.add_argument('filename2', type=argparse.FileType('r'))
-    args = parser.parse_args()
-    output = augment(args.filename, args.filename2)
+    modify_augcc = open('augmented_complete_config.yaml', 'w')
+    modify_augcc.write(yaml.dump(yaugcc))
+    modify_augcc.close()
