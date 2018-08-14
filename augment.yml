@@ -1,0 +1,26 @@
+---
+- hosts: owncomp
+  tasks:
+  - name: include variables from compiled complete_config
+    include_vars:
+      file: complete_config.yaml # generated from the compiler
+      name: config
+
+  - name: create a temporary directory for default-data
+    file:
+      path: ./tmp
+      state: directory
+
+  - name: create a new augmented_complete_config.yaml
+    copy:
+      src: ./complete_config.yaml
+      dest: ./augmented_complete_config.yaml
+  
+  - name: combine fields for each lightweight component
+    include_tasks: augment_git.yml
+    vars:
+      component: "{{ item }}"
+      index: "{{ idx }}"
+    with_items: "{{ config['lightweight_components'] }}"
+    loop_control:
+      index_var: idx
